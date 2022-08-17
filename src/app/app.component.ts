@@ -356,6 +356,7 @@ export class AppComponent implements OnInit {
         }
       }
       if (
+        // 37400
         this.cvorNscList
           ?.filter(({ code }) => code === 'YES-NO-NUMBER' || code === 'YES-NOT-REQUIRED')
           .map(({ id }) => id)
@@ -389,7 +390,7 @@ export class AppComponent implements OnInit {
           }
         }
       }
-      if (this.isEdit && this.cvirObject?.cvirStatus === this.statusRejectedId) {
+      if (this.isEdit && (this.cvirObject?.cvirStatus === this.statusRejectedId || this.cvirObject?.cvirStatus === this.statusNewCvirId)) {
         cvir.cvirStatus = this.statusNewCvirId;
         // cvir.prevCvirStatus = this.cvirObject?.cvirStatus;
       }
