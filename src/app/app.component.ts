@@ -163,6 +163,7 @@ export class AppComponent implements OnInit {
   rvs = ['RV', 'no RV'];
   rvStatuses = this.RepairVerificationStatusOptions;
   modificationTypes = ['lessThan24hrs', 'greaterThan24hrs'];
+  inspectionLevels = ['<=4', '5'];
 
   // previous CVIR object
   cvirObject = {
@@ -209,6 +210,7 @@ export class AppComponent implements OnInit {
     rv: new FormControl(this.rvs[0]),
     rvStatus: new FormControl(`${this.rvStatuses[0].id}`),
     modificationType: new FormControl(this.modificationTypes[0]),
+    selectedLevel: new FormControl(this.inspectionLevels[0]),
     cvorNscType: new FormControl(`${this.cvorNscList[0].id}`),
     cvorNscTypeChanged: new FormControl(false),
     cvorNscPopulated: new FormControl(true),
@@ -219,6 +221,10 @@ export class AppComponent implements OnInit {
     plate4Populated: new FormControl(true),
     prevCvirStatus: new FormControl('OTHER')
   });
+
+  get selectedLevel() {
+    return this.fm.controls.selectedLevel.value;
+  };
 
   private auth = {
     isOnlineMode: () => this.fm.controls.mode.value === this.modes[0]
@@ -400,7 +406,7 @@ export class AppComponent implements OnInit {
     if (
       this.auth.isOnlineMode() &&
       ((!this.trackInputPopulation.cvorNsc.populated && this.getCvorNSCIdCodeById(cvir?.cvirVehicles[0].cvorTypeVehicle) === 'YES-NUMBER') ||
-        (!this.trackInputPopulation.driverLicense.populated && !cvir?.cvirDriver?.driverLicenceNotAvailable) ||
+        (!this.trackInputPopulation.driverLicense.populated && this.selectedLevel !== '5' && !cvir?.cvirDriver?.driverLicenceNotAvailable) ||
         !this.trackInputPopulation.plates.every(x => x.populated))
     ) {
       cvir.cvirStatus = this.statusNewCvirId;

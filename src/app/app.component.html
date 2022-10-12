@@ -112,6 +112,16 @@
             <label class="form-check-label" for="cvorNscTypeChanged">CVOR/NSC Type changed</label>
           </div>
         </div>
+        <div class="col">
+          <div class="form-floating">
+            <select class="form-select" id="lvl" [formControl]="fm.controls.selectedLevel">
+              <option *ngFor="let o of inspectionLevels" [value]="o">
+                {{ o }}
+              </option>
+            </select>
+            <label for="lvl">Inspection Level</label>
+          </div>
+        </div>
       </div>
     </ng-container>
     <div class="row align-items-start mb-3">
